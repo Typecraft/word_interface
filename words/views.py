@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
 from django.urls import reverse
@@ -66,12 +66,66 @@ def word(request):
                 freeTrans=form.cleaned_data['freeTrans'],
                 freeTrans2=form.cleaned_data['freeTrans2'],
                 comment=form.cleaned_data['comment'],
-                owner_id=1
+                owner_id=request.user.id
             )
             model.save()
         return render(request, 'words/addword.html')
     else:
         return HttpResponse(status=409)
+
+
+@login_required
+def word_individual(request, id):
+    word = get_object_or_404(Word, pk=id)
+
+    if request.method == "GET":
+        return render(request, 'words/editword.html', {'word': word})
+    elif request.method == "DELETE":
+        word.delete()
+    elif request.method == "PATCH" or request.method == "PUT":
+        form = WordForm(request.POST)
+
+        if form.is_valid():
+            word.word = form.cleaned_data['word']
+            word.freeTrans = form.cleaned_data['freeTrans']
+            word.freeTrans2 = form.cleaned_data['freeTrans2']
+            word.comment = form.cleaned_data['comment']
+            word.save()
+
+    return redirect('/my-words')
+
+
+@login_required
+def word_delete(request, id):
+    if request.method != "POST":
+        return 409
+
+    word = get_object_or_404(Word, pk=id)
+
+    if word.owner != request.user:
+        return 403
+
+    word.delete()
+    return redirect('/my-words')
+
+
+@login_required()
+def word_update(request, id):
+    if request.method != "POST":
+        return 409
+
+    word = get_object_or_404(Word, pk=id)
+
+    form = WordForm(request.POST)
+
+    if form.is_valid():
+        word.word = form.cleaned_data['word']
+        word.freeTrans = form.cleaned_data['freeTrans']
+        word.freeTrans2 = form.cleaned_data['freeTrans2']
+        word.comment = form.cleaned_data['comment']
+        word.save()
+
+    return redirect('/my-words')
 
 
 @login_required
@@ -81,7 +135,9 @@ def my_words(request):
     :param request:
     :return:
     """
-    words_all = Word.objects.filter(owner_id=1).order_by('word')
+    words_all = Word.objects\
+        .filter(owner_id=request.user.id)\
+        .order_by('word')
     paginator = Paginator(words_all, 25)
     page = request.GET.get('page')
 

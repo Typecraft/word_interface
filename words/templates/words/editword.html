@@ -24,7 +24,7 @@
         </div>
         <div class="row">
             <div class="words__new">
-                <form action="/word" method="POST" class="form-horizontal">
+                <form action="/word/{{ word.id }}/update" method="POST" class="form-horizontal">
                     {% csrf_token %}
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="wordInput">Word</label>

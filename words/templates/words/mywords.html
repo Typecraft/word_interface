@@ -31,10 +31,13 @@
                     </div>
                     <div class="word__column">
                         <div class="word__title text-success">Comment</div>
-                        <div class="word__comment">{{ word.comment|truncatechars:9 }}&nbsp;</div>
+                        <div class="word__comment">{{ word.comment|truncatechars:20 }}&nbsp;</div>
                     </div>
                     <div class="word__column--right">
-                        <button class="btn btn-danger"><i class="fa fa-trash"></i> Delete</button>
+                        <form action="/word/{{ word.id }}/delete" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</button>
+                        </form>
                     </div>
                 </a>
             {% endfor %}
