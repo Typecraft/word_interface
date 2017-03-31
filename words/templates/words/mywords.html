@@ -12,7 +12,26 @@
         <a href="/"><span>Home</span>&nbsp;<i class="fa fa-arrow-right"></i></a>
     </div>
     <div class="mywords__wrapper">
-        <div class="header row">
+        <div class="header">
+            <ul class="pagination">
+                {% if page == 1 %}
+                    <li class="disabled"><a href="">&laquo;</a></li>
+                {% else %}
+                    <li><a href="/my-words?page={{ page|add:-1 }}">&laquo;</a></li>
+                {% endif %}
+                {% for i in range %}
+                    {% if i == page %}
+                        <li class="active"><a href="#">{{ i }}</a></li>
+                    {% else %}
+                        <li><a href="/my-words?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                {% endfor %}
+                {% if page == num_pages %}
+                    <li class="disabled"><a href="">&raquo;</a></li>
+                {% else %}
+                    <li><a href="/my-words?page={{ page|add:1 }}">&raquo;</a></li>
+                {% endif %}
+            </ul>
         </div>
         <div class="wordlist">
             {% for word in words %}
