@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import HttpResponse
@@ -35,7 +35,7 @@ def login_user(request):
         return render(request, 'words/login.html')
 
 
-def logout(request):
+def logout_user(request):
     if request.user.is_authenticated:
         logout(request)
 
