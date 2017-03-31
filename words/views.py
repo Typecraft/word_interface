@@ -81,15 +81,26 @@ def my_words(request):
     :param request:
     :return:
     """
-    words_all = Word.objects.filter(owner_id=1)
-    paginator = Paginator(words_all, 50)
+    words_all = Word.objects.filter(owner_id=1).order_by('word')
+    paginator = Paginator(words_all, 25)
     page = request.GET.get('page')
 
     try:
         words = paginator.page(page)
     except PageNotAnInteger:
-        words = paginator.page(1)
+        page = 1
+        words = paginator.page(page)
     except EmptyPage:
-        words = paginator.page(paginator.num_pages)
+        page = paginator.num_pages
+        words = paginator.page(page)
 
-    return render(request, 'words/mywords.html', {'words': words})
+    min_page = max(1, int(page)-3)
+    max_page = min(min_page + 6, paginator.num_pages)
+    paginator_template_range = range(min_page, max_page+1)
+
+    return render(request, 'words/mywords.html', {
+        'words': words,
+        'num_pages': paginator.num_pages,
+        'page': int(page),
+        'range': paginator_template_range
+    })
