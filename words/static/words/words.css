@@ -1,0 +1,13 @@
+textarea{
+    resize: vertical;
+}
+
+.back{
+    position: fixed;
+    top: 1em;
+    left: 1em;
+}
+
+.back i{
+
+}
