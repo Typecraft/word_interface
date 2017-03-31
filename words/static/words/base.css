@@ -1,0 +1,15 @@
+html, body{
+    padding: 0;
+    margin: 0;
+    height: 100%;
+}
+.back{
+    position: fixed;
+    top: 2em;
+    left: 2em;
+}
+.forward{
+    position: fixed;
+    top: 2em;
+    right: 2em;
+}

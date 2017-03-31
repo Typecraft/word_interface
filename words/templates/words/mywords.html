@@ -1,0 +1,24 @@
+{% extends 'words/base.html' %}
+
+{% block body %}
+    <div class="container">
+        <div class="header row">
+            <div class="back">
+                <a href="/word"><i class="fa fa-arrow-left"></i>&nbsp;<span>Add word</span></a>
+            </div>
+            <div class="forward">
+                <a href="/"><span>Home</span>&nbsp;<i class="fa fa-arrow-right"></i></a>
+            </div>
+        </div>
+        <div class="wordlist">
+            {% for word in words %}
+                <div class="word">
+                    <span class="word__word">{{ word.word }}</span>
+                    <span class="word__freetrans">{{ word.freeTrans }}</span>
+                    <span class="word__freetrans2">{{ word.freeTrans2 }}</span>
+                    <span class="word__comment">{{ word.comment|truncatechars:9 }}</span>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
