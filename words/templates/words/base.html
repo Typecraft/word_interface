@@ -14,11 +14,19 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <link rel="stylesheet" href="{% static 'words/base.css' %}">
+    <script src="{% static 'words/base.js' %}"></script>
     {% block head %}
 
     {% endblock %}
 </head>
 <body>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
     {% block body %}
     {% endblock %}
     {% block endbody %}

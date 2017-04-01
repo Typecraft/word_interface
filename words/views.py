@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
@@ -69,6 +70,7 @@ def word(request):
                 owner_id=request.user.id
             )
             model.save()
+            messages.add_message(request, messages.SUCCESS, "Added word")
         return render(request, 'words/addword.html')
     else:
         return HttpResponse(status=409)
@@ -103,9 +105,11 @@ def word_delete(request, id):
     word = get_object_or_404(Word, pk=id)
 
     if word.owner != request.user:
+        messages.add_message(request, messages.ERROR, "You don't have access to delete this word")
         return 403
 
     word.delete()
+    messages.add_message(request, messages.SUCCESS, "Message deleted")
     return redirect('/my-words')
 
 
@@ -124,6 +128,8 @@ def word_update(request, id):
         word.freeTrans2 = form.cleaned_data['freeTrans2']
         word.comment = form.cleaned_data['comment']
         word.save()
+
+    messages.add_message(request, messages.SUCCESS, 'Word updated')
 
     return redirect('/my-words')
 
