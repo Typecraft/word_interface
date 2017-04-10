@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 
@@ -147,9 +148,18 @@ def my_words(request):
     :param request:
     :return:
     """
+    search_query = request.GET.get('q')
+    print(search_query)
     words_all = Word.objects\
         .filter(owner_id=request.user.id)\
         .order_by('word')
+
+    if search_query:
+        words_all = words_all.filter(
+            Q(word__contains=search_query) |
+            Q(freeTrans__contains=search_query) |
+            Q(freeTrans2__contains=search_query)
+        )
     paginator = Paginator(words_all, 25)
     page = request.GET.get('page')
 
@@ -170,5 +180,6 @@ def my_words(request):
         'words': words,
         'num_pages': paginator.num_pages,
         'page': int(page),
+        'is_filtered': search_query is not None,
         'range': paginator_template_range
     })

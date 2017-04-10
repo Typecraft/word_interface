@@ -33,6 +33,21 @@
                 {% endif %}
             </ul>
         </div>
+        <div class="search">
+            <form action="my-words" method="GET" class="form-horizontal" accept-charset="UTF-8">
+                <div class="form-group">
+                    <label class="text-success col-sm-2 control-label" for="search"><i class="fa fa-search"></i></label>
+                    <div class="col-sm-10">
+                        <input class="form-control" placeholder="Search" autofocus type="text" id="search" name="q">
+                    </div>
+                </div>
+            </form>
+            {% if is_filtered %}
+                <a href="my-words">
+                    <i class="fa fa-times"></i> Clear filter
+                </a>
+            {% endif %}
+        </div>
         <div class="wordlist">
             {% for word in words %}
                 <a href="/word/{{ word.id }}" class="word row">
