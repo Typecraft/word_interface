@@ -21,11 +21,24 @@
     position: relative;
     background: #333333;
     color: white;
-    width: 100%;
     padding: 1em 3em;
     border-radius: 5px;
     border-bottom: 2px solid transparent;
     margin-bottom: 0.5em;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+.word__title{
+    font-size: 17px;
+}
+
+.word__innertitle{
+    font-size: 14px;
+}
+
+.word__content{
+    font-size: 14px;
 }
 
 .word:hover{
@@ -33,11 +46,6 @@
     color: white;
 
     border-bottom: 2px solid #00dba3;
-}
-
-.word__column{
-    display: inline-block;
-    width: 15%;
 }
 
 .word__column--right{

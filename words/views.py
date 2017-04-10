@@ -64,9 +64,11 @@ def word(request):
         if form.is_valid():
             model = Word(
                 word=form.cleaned_data['word'],
+                wordExample=form.cleaned_data['wordExample'],
                 freeTrans=form.cleaned_data['freeTrans'],
+                freeTransExample=form.cleaned_data['freeTransExample'],
                 freeTrans2=form.cleaned_data['freeTrans2'],
-                comment=form.cleaned_data['comment'],
+                freeTrans2Example=form.cleaned_data['freeTrans2Example'],
                 owner_id=request.user.id
             )
             model.save()
@@ -89,9 +91,11 @@ def word_individual(request, id):
 
         if form.is_valid():
             word.word = form.cleaned_data['word']
+            word.wordExample = form.cleaned_data['wordExample']
             word.freeTrans = form.cleaned_data['freeTrans']
+            word.freeTransExample = form.cleaned_data['freeTransExample']
             word.freeTrans2 = form.cleaned_data['freeTrans2']
-            word.comment = form.cleaned_data['comment']
+            word.freeTrans2Example = form.cleaned_data['freeTrans2Example']
             word.save()
 
     return redirect('/my-words')
@@ -124,9 +128,11 @@ def word_update(request, id):
 
     if form.is_valid():
         word.word = form.cleaned_data['word']
+        word.wordExample = form.cleaned_data['wordExample']
         word.freeTrans = form.cleaned_data['freeTrans']
+        word.freeTransExample = form.cleaned_data['freeTransExample']
         word.freeTrans2 = form.cleaned_data['freeTrans2']
-        word.comment = form.cleaned_data['comment']
+        word.freeTrans2Example = form.cleaned_data['freeTrans2Example']
         word.save()
 
     messages.add_message(request, messages.SUCCESS, 'Word updated')

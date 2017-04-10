@@ -35,22 +35,57 @@
         </div>
         <div class="wordlist">
             {% for word in words %}
-                <a href="/word/{{ word.id }}" class="word">
-                    <div class="word__column">
-                        <div class="word__title text-success">Word</div>
-                        <div class="word__word">{{ word.word }}</div>
+                <a href="/word/{{ word.id }}" class="word row">
+                    <div class="col-sm-12 col-md-3">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="word__title text-success">CoTu</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="word__innertitle text-success">Word</div>
+                                <div class="word__content">{{ word.word }}</div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="word__innertitle text-success">Example</div>
+                                <div class="word__content">{{ word.wordExample }}</div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="word__column">
-                        <div class="word__title text-success">Free translation</div>
-                        <div class="word__freetrans">{{ word.freeTrans }}&nbsp;</div>
+                    <div class="col-sm-12 col-md-3">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="word__title text-success">Vietnamese</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="word__innertitle text-success">Word</div>
+                                <div class="word__content">{{ word.freeTrans }}</div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="word__innertitle text-success">Example</div>
+                                <div class="word__content">{{ word.freeTransExample }}</div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="word__column">
-                        <div class="word__title text-success">Free translation 2</div>
-                        <div class="word__freetrans2">{{ word.freeTrans2 }}&nbsp;</div>
-                    </div>
-                    <div class="word__column">
-                        <div class="word__title text-success">Comment</div>
-                        <div class="word__comment">{{ word.comment|truncatechars:20 }}&nbsp;</div>
+                    <div class="col-sm-12 col-md-3">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="word__title text-success">English</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="word__innertitle text-success">Word</div>
+                                <div class="word__content">{{ word.freeTrans2 }}</div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="word__innertitle text-success">Example</div>
+                                <div class="word__content">{{ word.freeTrans2Example }}</div>
+                            </div>
+                        </div>
                     </div>
                     <div class="word__column--right">
                         <form action="/word/{{ word.id }}/delete" method="POST">
